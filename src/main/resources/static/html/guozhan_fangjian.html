@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+
+        .el-row {
+            margin-bottom: 20px;
+        }
+        .el-col {
+            border-radius: 4px;
+        }
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+        .grid-content {
+            border-radius: 4px;
+            min-height: 60px;
+        }
+        .item {
+            margin: 4px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <!--横条-->
+    <el-row>
+        <el-col :span="24">
+            <div class="grid-content bg-purple-dark">
+
+                <div>
+
+                    <el-tooltip class="item" effect="dark" content="音量设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-headset"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="好友聊天"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-chat-dot-round"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-s-tools"></el-button>
+                    </el-tooltip>
+
+                    <el-button style="margin-top: 10px;margin-right: 0px;
+                    margin-bottom: 10px;margin-left: 48%">特权</el-button>
+                    <el-button>排行</el-button>
+                    <el-button>反馈</el-button>
+                    <el-button>录像</el-button>
+                    <el-button>返回</el-button>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+
+    <div style="width: 200px;height: 600px;float: left">
+
+        <el-button style="width: 50%;height: 17%;"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -27px;font-size: 18px">任务</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 10px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -31px;font-size: 20px">活动</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 10px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -29px;font-size: 20px">福利</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 15px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -30px;font-size: 20px">招募</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 20px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -30px;font-size: 20px">录像</div>
+
+    </div>
+
+    <div style="width: 760px;height: 525px;background: aqua;float: left">
+
+        <div style="height: 266px;width: 190px;float: left" >
+            <img style="width: 183px;height: 255px" :src="fz_user.image"
+                 onerror="javascript:this.src='../image/zuowei.png'">
+        </div>
+
+        <div style="height: 266px;width: 190px;float: left"
+             v-for="(item,index) in users" :key="index">
+
+            <img style="width: 183px;height: 255px" :src="item.image">
+        </div>
+
+    </div>
+
+    <div style="width: 20%;height: 550px;margin-left: 15px;background: #99a9bf;
+    float: left">
+
+        <div style="width: 100%;height: 350px">
+            yonghu
+        </div>
+
+        <div style="width: 100%;height: 115px">
+            <el-button @click="getUsers">123</el-button>
+        </div>
+
+        <div style="text-align:center;width: 100%;height: 100px">
+
+            <el-button v-if="User.fz_flag" style="width: 100px;height: 100px"
+                    type="warning" @click="gameStart"
+                       :disabled="users_total==0||
+                       users[0].userReadymsg==0||
+                       users[1].userReadymsg==0||
+                       users[2].userReadymsg==0||
+                       users[3].userReadymsg==0||
+                       users[4].userReadymsg==0||
+                       users[5].userReadymsg==0||
+                       users[6].userReadymsg==0?true:false"
+                       circle>开始游戏</el-button>
+            <!--true 禁用 false 启用-->
+
+            <el-button v-else style="width: 100px;height: 100px" type="warning"
+                       @click="userReady()" circle>{{userReadymsg}}</el-button>
+
+            <el-button style="width: 54px;height: 54px;margin-left: -9px;margin-bottom: 0px"
+                    type="success" circle>换房</el-button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+            websock:null,
+            fz_user:{   //房主
+                image:''
+            },
+            users_total: 0,
+            userReadymsg:'准备',
+            //当前用户
+            User: {
+                username:'',
+                password:'',
+                image:'',
+                fz_flag:'',
+                userReadymsg:'-1',
+                userRoomNumber:''
+            },
+            fz_id:'',
+            //用户集合 最多7个人
+            users:[
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',  //座位情况
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                },
+                {
+                    username:'',
+                    password:'',
+                    image:'../image/zuowei.png',
+                    userReadymsg:'-1',
+                    userRoomNumber:''
+                }
+            ]
+        },
+        created(){
+
+            this.getFangzhu();
+            this.getUser();//获取用户信息 判断是否房主 确定按钮
+
+        },
+        methods:{
+            initWebSocket(){
+
+                let target='ws://localhost:8080/userReady/'+this.User.username;
+                this.ws = new WebSocket(target);
+
+                let self=this;
+                this.ws.onmessage=function (event) {
+
+                    if(event.data=='开始游戏'){
+
+                        window.location.href="gameStart.html?fz_id="+self.fz_id
+                    }
+
+                }
+            },
+            //用户准备信息
+            userReady(){
+
+                if(this.userReadymsg=='准备'){
+
+                    //ajax 把状态变准备 为1
+                    let self = this;
+                    axios.request({
+                        url: '/setOne',
+                        method: 'get'
+                    })
+                        .then(function (response) {
+                            console.log(response.data)
+
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    this.userReadymsg='取消'
+                }else {
+                    //ajax 把状态变不准备 为0
+                    let self = this;
+                    axios.request({
+                        url: '/setZero',
+                        method: 'get'
+                    })
+                        .then(function (response) {
+                            console.log(response.data)
+
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    this.userReadymsg='准备'
+                }
+
+            },
+            //房主开始游戏
+            gameStart(){
+                let self=this;
+                axios.request({
+                    url: '/setRoles',
+                    method: 'get',
+                    params: {
+                        id:self.fz_id
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        let namestr ='';
+                        for(let i=0;i<response.data.users.length;i++){
+                            namestr += response.data.users[i].username+":";
+                        }
+                        self.ws.send('开始游戏:'+response.data.room_number+":"+namestr)
+
+                        window.location.href="gameStart.html?fz_id="+self.fz_id
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+            },
+            getFangzhu: function () {
+                let para = window.location.search;
+                let a=para.split("=");
+                this.fz_id=a[1];
+
+                let self = this;
+                axios.request({
+                    url: '/getRooms',
+                    method: 'get',
+                    params: {
+                        id:self.fz_id
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        self.fz_user=response.data.fangzhu
+                        self.fz_id=response.data.room_number
+                        if(response.data.users.length!=0){
+                            for(let i=0;i<7;i++){
+                                if(response.data.users[i]!=null){
+                                    self.users[i]=response.data.users[i];
+                                }
+                            }
+                        }
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            //获取用户集合
+            getUsers(){
+                let self=this;
+                axios.request({
+                    url:'/getRooms',
+                    method:'get',
+                    params: {
+                        id:self.fz_id
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        self.users_total=response.data.users.length;
+
+                        if(response.data.users.length!=0){
+                            for(let i=0;i<7;i++){
+                                if(response.data.users[i]!=null){
+                                    self.$set(self.users,i,response.data.users[i])
+                                }
+                            }
+                        }
+                        console.log(self.users)
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            //获取用户信息 判断是否房主
+            getUser(){
+                let self=this;
+                axios.request({
+                    url:'/getUser',
+                    method:'get'
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        self.User=response.data;
+                        self.initWebSocket();
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }/*,
+        mounted() {
+            setInterval(this.getUsers, 10000);
+        }*/
+    })
+
+</script>
+
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+
+        .el-row {
+            margin-bottom: 20px;
+        }
+        .el-col {
+            border-radius: 4px;
+        }
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+        .grid-content {
+            border-radius: 4px;
+            min-height: 60px;
+        }
+        .item {
+            margin: 4px;
+        }
+
+        #gallery { width: 93%; min-height: 12em;}
+        .gallery li { float: left; width: 96px; padding: 0.4em;list-style: none;
+            margin: 0 0.4em 0.4em 0; text-align: center; }
+        .gallery li img { width: 100%; cursor: move; }
+
+        #trash { width: 98%; min-height: 11em; padding: 1%; }
+        #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+        $(function () {
+            // 定义 gallery 和 trash
+            var $gallery = $( "#gallery" ),
+                $trash = $( "#trash" );
+
+            // 让 gallery 图片可以移动
+            $( "li", $gallery ).draggable({
+                cancel: "a.ui-icon",
+                revert: "invalid",
+                containment: "document",
+                helper: "clone",
+                cursor: "move"
+            });
+
+            // 让 trash 可以移动图片, 接受 gallery 的图片
+            $trash.droppable({
+                accept: "#gallery > li",
+                classes: {
+                    "ui-droppable-active": "ui-state-highlight"
+                },
+                drop: function( event, ui ) {
+                    deleteImage( ui.draggable );
+                }
+            });
+
+            // 让 gallery 可以移动图片, 接受 trash的图片
+            $gallery.droppable({
+                accept: "#trash li",
+                classes: {
+                    "ui-droppable-active": "custom-state-active"
+                },
+                drop: function( event, ui ) {
+                    recycleImage( ui.draggable );
+                }
+            });
+
+            // 图片删除
+            var recycle_icon ;
+            function deleteImage( $item ) {
+                $item.hide();
+                var $list = $( "ul", $trash ).length ?
+                    $( "ul", $trash ) :
+                    $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
+
+                $item.find( "a.ui-icon-trash" ).remove();
+
+                $item.append( recycle_icon ).appendTo( $list );
+                $item.show();
+            }
+
+            // 图片循环
+            var trash_icon;
+            function recycleImage( $item ) {
+                $item.hide();
+                    $item
+                        .find( "a.ui-icon-refresh" )
+                        .remove()
+                        .end()
+                        .css( "width", "96px")
+                        .append( trash_icon )
+                        .find( "img" )
+                        .css( "height", "115px" )
+                        .end()
+                        .appendTo( $gallery );
+                $item.show();
+
+            }
+        })
+    </script>
+</head>
+<body>
+
+<div id="app">
+
+    <!--横条-->
+    <el-row>
+        <el-col :span="24">
+            <div class="grid-content bg-purple-dark">
+
+                <div>
+
+                    <el-tooltip class="item" effect="dark" content="音量设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-headset"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="好友聊天"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-chat-dot-round"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-s-tools"></el-button>
+                    </el-tooltip>
+
+                    <el-button style="margin-top: 10px;margin-right: 0px;
+                    margin-bottom: 10px;margin-left: 48%">特权</el-button>
+                    <el-button>排行</el-button>
+                    <el-button>反馈</el-button>
+                    <el-button>录像</el-button>
+                    <el-button>返回</el-button>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+
+    <div style="width: 1335px;height: 440px">
+
+        <!--牌场-->
+        <div style="width: 1060px;height: 100%;float: left">
+
+            <!--第一排-->
+            <div style="width: 150px;height: 180px;margin-left: 215px;margin-top: -1px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <div style="width: 150px;height: 180px;margin-left: 64px;margin-top: -1px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <div style="width: 150px;height: 180px;margin-left: 52px;margin-top: -1px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <!--右一-->
+            <div style="width: 150px;height: 180px;margin-left: 50px;margin-top: 25px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <!--左一-->
+            <div style="width: 150px;height: 180px;margin-left: 10px;margin-top: -180px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <!--左二-->
+            <div style="width: 150px;height: 180px;margin-left: 10px;margin-top: 25px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+            <!--右二-->
+            <div style="width: 150px;height: 180px;margin-left: 672px;margin-top: 25px;
+            background-color: blueviolet;float: left">
+                <img src="">
+                <img src="">
+            </div>
+
+        </div>
+
+        <!--房间信息-->
+        <div style="width: 275px;height: 100%;float: left">
+            78
+        </div>
+    </div>
+
+    <div style="width: 1335px;height: 440px">
+        <!--装备-->
+        <div style="width: 185px;height: 100%;float: left">
+            a
+        </div>
+
+        <!--卡牌-->
+        <div style="width: 700px;height: 100%;float: left">
+            b
+        </div>
+
+        <!--武将-->
+        <div style="width: 275px;height: 100%;float: left">
+
+            <ul id="myself" class="gallery">
+                <li class="ui-widget-content ui-corner-tr">
+                    <img :src="General01.general_image" style="width: 96px;height: 115px"
+                    >
+                </li>
+                <li class="ui-widget-content ui-corner-tr">
+                    <img :src="General02.general_image" style="width: 96px;height: 115px">
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <el-dialog title="请选择同势力武将" :visible.sync="dialogFormVisible" center>
+
+            <ul id="gallery" class="gallery" >
+
+                <li class="ui-widget-content ui-corner-tr" v-for="(item,index) in generals"
+                    :key="index">
+                    <img :src="item.general_image" style="width: 96px;height: 115px">
+                </li>
+
+            </ul>
+
+        <hr>
+        <div id="trash" class="ui-widget-content ui-state-default">
+
+            <!--角色选的武将-->
+            <ul id="choose" class="gallery">
+
+            </ul>
+        </div>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="onSubmit()" center>确 定
+            </el-button>
+            <br>时间条
+        </div>
+
+    </el-dialog>
+
+</div>
+
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            fz_id:'',
+            ws:'',
+            dialogFormVisible:true,
+            User:{
+                username:'',
+                fz_flag:'',
+                wujiang:[
+                    {
+                        general_id:'',
+                        general_name:'',
+                        general_sex:'',
+                        general_image:''
+                    },
+                    {
+                        general_id:'',
+                        general_name:'',
+                        general_sex:'',
+                        general_image:''
+                    }
+                ]
+            },
+            General01:{
+                general_id:'',
+                general_name:'',
+                general_sex:'',
+                general_image:''
+            },
+            General02:{
+                general_id:'',
+                general_name:'',
+                general_sex:'',
+                general_image:''
+            },
+            generals:[
+                {
+                    general_id:'',
+                    general_name:'',
+                    general_sex:'',
+                    general_image:''
+                },
+                {
+                    general_id:'',
+                    general_name:'',
+                    general_sex:'',
+                    general_image:''
+                },
+                {
+                    general_id:'',
+                    general_name:'',
+                    general_sex:'',
+                    general_image:''
+                },
+                {
+                    general_id:'',
+                    general_name:'',
+                    general_sex:'',
+                    general_image:''
+                }
+            ],
+            users:[
+                {
+                    username:'',
+                    image:'',
+                    userReadymsg:'-1',  //座位情况
+                    wujiang:[
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        },
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        }
+                    ]
+                },
+                {
+                    image:'',
+                    userReadymsg:'-1',  //座位情况
+                    wujiang:[
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        },
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        }
+                    ]
+                },
+                {
+                    image:'',
+                    userReadymsg:'-1',  //座位情况
+                    wujiang:[
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        },
+                        {
+                            general_id:'',
+                            general_name:'',
+                            general_sex:'',
+                            general_image:'../image/将.png'
+                        }
+                    ]
+                }
+            ]
+        },
+        created(){
+            this.getRole();
+        },
+        methods:{
+            initWebSocket(){
+
+                let target='ws://localhost:8080/userReady/'+this.User.username;
+                this.ws = new WebSocket(target);
+
+                this.ws.onmessage=function (event) {
+
+                    let a=JSON.parse(event.data);
+                    console.log(a)
+
+                }
+            },
+            getRole(){
+
+                let para = window.location.search;
+                let a=para.split("=");
+                this.fz_id=a[1];
+
+                let self=this;
+                axios.request({
+                    url: '/getUser',
+                    method: 'get'
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        self.generals=response.data.wujiang_list
+                        self.User.username=response.data.username
+                        self.User.fz_flag=response.data.fz_flag
+
+                        self.initWebSocket();
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            onSubmit(){
+                let c=$('#choose li img');
+                this.General01.general_image=c[0].src;
+                this.General02.general_image=c[1].src;
+
+                this.User.wujiang[0].general_image=this.General01.general_image
+                this.User.wujiang[1].general_image=this.General02.general_image
+
+                let u=JSON.stringify(this.User)
+
+                this.ws.send('选将信息`'+this.fz_id+"`"+this.User.username+"`"+u)
+
+                this.dialogFormVisible = false;
+            }
+        }
+    })
+</script>
+</html>

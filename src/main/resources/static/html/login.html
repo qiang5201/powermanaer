@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+
+</head>
+<body>
+<div id="app" style="padding-top: 300px;padding-left: 300px">
+
+    <el-form :model="User" :rules="rules" ref="User" label-width="80px">
+        <el-form-item label="用户名:" prop="username">
+            <el-input
+                    placeholder="请输入用户名"
+                    v-model="User.username"
+                    style="width: 190px"
+                    clearable>
+                <i
+                        class="el-icon-edit el-input__icon"
+                        slot="suffix">
+                </i>
+            </el-input>
+        </el-form-item>
+        <el-form-item label="密 码:" prop="password">
+            <el-input placeholder="请输入密码" v-model="User.password"
+                      style="width: 190px" show-password>
+            </el-input>
+        </el-form-item>
+
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit('User')">立即登录</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+
+</div>
+
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
+<script>
+
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            User:{
+                username:'',
+                password:'',
+                image: ''
+            },
+            rules: {
+                username: [
+                    {required: true, message: '请输入用户名', trigger: 'blur'}
+                ],
+                password: [
+                    {required: true, message: '请输入密码', trigger: 'blur'}
+                ]
+            }
+        },
+        methods:{
+            login(){
+                let self=this;
+                axios.request({
+                    url:'/loginTest',
+                    method:'post',
+                    params:{
+                        username:self.User.username,
+                        password:self.User.password
+                    }
+                })
+                    .then(function (response) {
+                        if(200==response.status){
+                            window.location.href="html/jinru.html"
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            onSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.login();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }
+        }
+    })
+</script>
+
+
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+
+<div id="app">
+
+    <!--横条-->
+    <el-row>
+        <el-col :span="24">
+            <div class="grid-content bg-purple-dark">
+
+                <div>
+                    <el-tooltip class="item" effect="dark" content="音量设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-headset"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="好友聊天"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-chat-dot-round"></el-button>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="设置"
+                                placement="bottom-start">
+                        <el-button icon="el-icon-s-tools"></el-button>
+                    </el-tooltip>
+
+                    <el-button style="margin-top: 10px;margin-right: 0px;
+                    margin-bottom: 10px;margin-left: 48%">特权</el-button>
+                    <el-button>排行</el-button>
+                    <el-button>反馈</el-button>
+                    <el-button>录像</el-button>
+                    <el-button>返回</el-button>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+
+    <div style="width: 200px;height: 600px;float: left">
+
+        <el-button style="width: 50%;height: 17%;"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -27px;font-size: 18px">任务</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 10px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -31px;font-size: 20px">活动</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 10px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -29px;font-size: 20px">福利</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 15px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -30px;font-size: 20px">招募</div>
+
+        <el-button style="width: 50%;height: 17%;margin-top: 20px"
+                   type="primary" circle>
+            <i class="el-icon-question" style="font-size: 75px;z-index: -1"></i>
+        </el-button>
+        <div style="margin-left: 31px;margin-top: -30px;font-size: 20px">录像</div>
+
+    </div>
+
+
+    <div style="width: 60%;height: 450px;background: aqua;float: left">
+        <el-tabs type="border-card" style="width: 100%;height: 100%">
+            <el-tab-pane label="国战">
+
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="date"
+                                label="房间名"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="座位"
+                                width="60">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="进入等级"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="逃跑率"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="出手时间"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="人数"
+                                width="60">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="状态"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="信息"
+                                width="60">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="操作">
+                        </el-table-column>
+                    </el-table>
+                </template>
+
+            </el-tab-pane>
+            <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> 工会房间</span>
+                工会房间2
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+
+    <div style="width: 20%;height: 470px;margin-left: 15px;background: #99a9bf;float: left">
+
+        <div class="demo-fit">
+            <div class="block" style="width: 80%;height: 215px;margin-top: 10px;margin-left: 10%">
+
+                <img style="width: 100%; height: 100%"
+                            :src="image">
+            </div>
+            <div>
+                <label style="margin-left: 10%">EXP</label>
+                <el-progress :percentage="50" style="width: 80%;margin-left: 23%;
+                margin-top: -7%"></el-progress>
+            </div>
+        </div>
+        4
+        <el-button  @click="getImage">456
+        </el-button>
+    </div>
+
+    <div >
+        <el-button style="width: 136px;height: 73px;
+            margin-left: 481px" @click="join()">快速加入
+        </el-button>
+        <el-button style="width: 136px;height: 73px"
+                   @click="centerDialogVisible = true">创建房间</el-button>
+    </div>
+
+    <!--创建房间 弹出框-->
+    <el-dialog
+            title="创建房间"
+            :visible.sync="centerDialogVisible"
+            width="30%"
+            center>
+
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="房间名称">
+                <el-input v-model="form.name" style="width: 193px"></el-input>
+            </el-form-item>
+
+            <el-form-item label="密码">
+                <el-input v-model="form.pwd" style="width: 193px" show-password></el-input>
+            </el-form-item>
+
+            <el-menu
+                    default-active="2"
+                    class="el-menu-vertical-demo"
+                    @open="handleOpen"
+                    @close="handleClose">
+                <el-submenu index="1">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span>更多设置</span>
+                    </template>
+                    <el-menu-item-group>
+
+                        <el-form-item label="等级下限">
+                            <el-select v-model="form.region">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                                <el-option label="区域三" value="shanghai"></el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="出手时间">
+                            <el-select v-model="form.region">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                                <el-option label="区域三" value="shanghai"></el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="模式选择">
+                            <el-select v-model="form.region">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                                <el-option label="区域三" value="shanghai"></el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="禁止聊天">
+                            <el-checkbox-group v-model="form.type">
+                                <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+
+                        <el-form-item label="允许旁观">
+                            <el-checkbox-group v-model="form.type">
+                                <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+
+            <el-form-item style="margin-top: 17px">
+                <el-button type="primary" @click="onSubmit()">确 定</el-button>
+                <el-button @click="centerDialogVisible = false">取 消</el-button>
+            </el-form-item>
+
+        </el-form>
+    </el-dialog>
+
+</div>
+
+
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+            image: '',
+            centerDialogVisible: false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: '',
+                pwd: ''
+            },
+            tableData: [{
+                date: '2016-05-02',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }]
+        },
+        created(){
+            this.getImage();
+        },
+        methods:{
+            //快速加入
+            join(){
+              axios.request({
+                  url: '/join',
+                  method: 'get'
+              })
+                  .then(function (response) {
+                      console.log(response)
+                      console.log(response.data)
+                      window.location.href="guozhan_fangjian.html?fz_id="+response.data
+              })
+                  .catch(function (error) {
+                      console.log(error);
+                  });
+            },
+            //获取用户信息
+            getImage(){
+                let self=this;
+                axios.request({
+                    url:'/image',
+                    method:'get'
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        self.image=response.data.image;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            format(percentage) {
+                return percentage === 100 ? '满' : `${percentage}%`;
+            },
+            //确定创建房间
+            onSubmit() {
+                let self=this;
+                axios.request({
+                    url:'/fangzhu',
+                    method:'get'
+                })
+                    .then(function (response) {
+                        console.log(response.data)
+                        console.log(response.data.room_number)
+                        //带房间号 传参
+                        window.location.href="guozhan_fangjian.html?fz_id="+response.data.room_number
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+            },
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            }
+        }
+    })
+</script>
+
+<style>
+
+    .el-row {
+        margin-bottom: 20px;
+    }
+    .el-col {
+        border-radius: 4px;
+    }
+    .bg-purple-dark {
+        background: #99a9bf;
+    }
+    .grid-content {
+        border-radius: 4px;
+        min-height: 60px;
+    }
+    .item {
+        margin: 4px;
+    }
+
+
+</style>
+</html>

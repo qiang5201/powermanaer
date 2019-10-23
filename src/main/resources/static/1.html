@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<button onclick="openx()">开启</button>
+<button onclick="sendx()">发送</button>
+
+<ul id="d">
+    <li class="ui-widget-content ui-corner-tr">
+        <img src="../image/蔡文姬.jpg" style="width: 96px;height: 115px">
+    </li>
+    <li class="ui-widget-content ui-corner-tr">
+        <img src="../image/袁绍.jpg" style="width: 96px;height: 115px">
+    </li>
+    <li class="ui-widget-content ui-corner-tr">
+        <img src="../image/庞德.jpg" style="width: 96px;height: 115px">
+    </li>
+    <li class="ui-widget-content ui-corner-tr">
+        <img src="../image/张昭张纮.jpg" style="width: 96px;height: 115px">
+    </li>
+</ul>
+</body>
+
+
+<script type="text/javascript">
+
+    let $d = $('#d li img');
+    console.log($d[0].src)
+
+
+    let ws=null;
+    let target='ws://localhost:8080/echo/456';
+    ws = new WebSocket(target);
+
+
+    function sendx() {
+
+        let message='456 tom';
+        ws.send(message)
+    }
+
+    ws.onmessage=function(event){
+        console.log(5)
+        console.log(event.data)
+    }
+</script>
+</html>
